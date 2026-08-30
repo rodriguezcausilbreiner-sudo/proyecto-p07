@@ -1,0 +1,52 @@
+// P7 · Reto de pasos entre fichas
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ficha {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique
+  usuarios Usuario[]
+
+  @@map("ficha")
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  fichaId  Int      @map("ficha_id")
+  ficha    Ficha    @relation(fields: [fichaId], references: [id])
+  aportes  Aporte[]
+
+  @@map("usuario")
+}
+
+model Reto {
+  id        String   @id @default(uuid()) @db.Uuid
+  nombre    String
+  iniciaEn  DateTime @map("inicia_en") @db.Timestamptz
+  terminaEn DateTime @map("termina_en") @db.Timestamptz
+  aportes   Aporte[]
+
+  @@map("reto")
+}
+
+model Aporte {
+  id         BigInt   @id @default(autoincrement())
+  usuarioId  Int      @map("usuario_id")
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+  retoId     String   @map("reto_id") @db.Uuid
+  reto       Reto     @relation(fields: [retoId], references: [id])
+  pasos      Int
+  creadoEn   DateTime @default(now()) @map("creado_en") @db.Timestamptz
+
+  @@index([retoId])
+  @@index([usuarioId, retoId])
+  @@map("aporte")
+}

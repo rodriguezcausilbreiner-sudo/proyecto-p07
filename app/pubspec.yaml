@@ -1,0 +1,25 @@
+name: p7_reto_pasos
+description: "P7 · Reto de pasos entre fichas - Actividad No. 5 SENA ADSO"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  dio: ^5.5.0
+  pedometer: ^4.0.2
+  shared_preferences: ^2.3.2
+  socket_io_client: ^2.0.3+1
+  firebase_messaging: ^15.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
